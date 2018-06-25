@@ -9,3 +9,7 @@ def index():
 @app.route('/panels')
 def gene_panels():
     return render_template("panels.html")
+
+@app.route('/baitsets')
+def baitsets():
+    return render_template("baitsets.html")

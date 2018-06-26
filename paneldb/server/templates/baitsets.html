@@ -3,31 +3,49 @@
 
 {% block content %}
 <div class="container">
-<form>
+<form action="{{ url_for('baitsets') }}" method="POST" id="submit_baitset" name="submit_baitset" enctype=multipart/form-data>
   <div class="form-group">
     <br>
     <h4>Upload a new bait set</h4>
     <div class="input-group mb-3">
       <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default">Panel name</span>
+        <span class="input-group-text" id="inputGroup-sizing-default">Bait set name</span>
       </div>
-    <input type="text" class="form-control" aria-label="panel_name" aria-describedby="inputGroup-sizing-default">
+    <input type="text" class="form-control" aria-label="baitset_name" aria-describedby="inputGroup-sizing-default" required>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Description</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" ></textarea>
     </div>
 
     <div class="input-group mb-3">
       <div class="custom-file">
-        <input type="file" class="custom-file-input" id="inputGroupFile02">
-        <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
-      </div>
-      <div class="input-group-append">
-        <span class="input-group-text" id="">Upload</span>
+        <input type="file" class="custom-file-input" name="inputFile" id="inputfile" onchange="setfilename(this.value);" required>
+        <label class="custom-file-label" id="baiset_file_label" for="inputFile">Choose file</label>
       </div>
     </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
+<br>
+<h4>Available baitsets:</h4>
 
-<div>
-</div>
+<br><br>
+Submitted document: {{document}}
 
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+
+ function setfilename(val)
+  {
+    //get the file name
+    var fileName = val
+    //replace the "Choose a file" label
+    document.getElementById('baiset_file_label').innerHTML = fileName
+  }
+
+</script>
 {% endblock %}

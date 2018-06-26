@@ -2,5 +2,50 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h2>This is the panels page!</h2>
+<div class="container">
+<form action="{{ url_for('baitsets') }}" method="POST" id="submit_baitset" name="submit_baitset" enctype=multipart/form-data>
+  <div class="form-group">
+    <br>
+    <h4>Upload a gene panel</h4>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="inputGroup-sizing-default">Panel name</span>
+      </div>
+    <input type="text" class="form-control" aria-label="panel_name" aria-describedby="inputGroup-sizing-default" required>
+    </div>
+
+    <div class="form-group">
+      <label for="exampleFormControlTextarea1">Description</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" ></textarea>
+    </div>
+
+    <div class="input-group mb-3">
+      <div class="custom-file">
+        <input type="file" class="custom-file-input" name="inputFile" id="inputfile" onchange="setfilename(this.value);" required>
+        <label class="custom-file-label" id="panel_label" for="inputFile">Choose file</label>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+<br>
+<h4>Available panels:</h4>
+
+<br><br>
+Submitted document: {{document}}
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+
+ function setfilename(val)
+  {
+    //get the file name
+    var fileName = val
+    //replace the "Choose a file" label
+    document.getElementById('panel_label').innerHTML = fileName
+  }
+
+</script>
 {% endblock %}

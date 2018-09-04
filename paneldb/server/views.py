@@ -33,17 +33,23 @@ def baitsets():
         if baits_file.filename == '':
             flash('No selected file')
             return redirect(request.url)
+
         else:
             # Parse the file to check that it's OK
             # Extract fields to be passes to the DB
             # Pass stuff to DB and get all updated baitsets in it.
 
             document = secure_filename(baits_file.filename)
-
-            #check that the file extension is correct
+            # check that the file extension is correct
             extension_result = allowed_file(document)
 
             if extension_result:
+                    # savefile(baits_file) How to use this function correctly?
+                    # Make the data dictionary work
+                    baits_file.save(os.path.join(app.config['UPLOAD_FOLDER'], document))
+
+
+
                     data = {
                         'document': document,
                         'upload_folder': app.config['UPLOAD_FOLDER'],
@@ -55,14 +61,19 @@ def baitsets():
                 flash('File '+str(document)+' has a wrong extension', 'danger')
                 return redirect(request.url)
 
+
+
+
     return render_template("baitsets.html", **data)
+
 
 
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
-#def savefile:
+def savefile(filename):
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 #    """Saves a file in a temporary folder"""
 
 

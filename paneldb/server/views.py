@@ -4,6 +4,7 @@ import os
 from flask import render_template, flash, request, redirect
 from werkzeug.utils import secure_filename
 from paneldb import app
+from paneldb.parser.baitparser import read_file
 
 LOG = logging.getLogger(__name__)
 
@@ -24,7 +25,6 @@ def baitsets():
     if request.method == 'POST': #add new baitset
         # check if the post request has the file part
         if 'inputFile' not in request.files:
-            flash('No file part')
             return redirect(request.url)
 
         baits_file = request.files['inputFile']
@@ -40,40 +40,35 @@ def baitsets():
             # Pass stuff to DB and get all updated baitsets in it.
 
             document = secure_filename(baits_file.filename)
-            # check that the file extension is correct
-            extension_result = allowed_file(document)
 
-            if extension_result:
+
                     # savefile(baits_file) How to use this function correctly?
                     # Make the data dictionary work
-                    baits_file.save(os.path.join(app.config['UPLOAD_FOLDER'], document))
+                   # baits_file.save(os.path.join(app.config['UPLOAD_FOLDER'], document))
+            savefile(baits_file ,document)
+
+            #get content from file:
+            test = read_file(os.path.join(app.config['UPLOAD_FOLDER'], document))
 
 
 
-                    data = {
-                        'document': document,
-                        'upload_folder': app.config['UPLOAD_FOLDER'],
-                        'allowed_extensions' : app.config['ALLOWED_EXTENSIONS'],
-                        'in_extensions' : extension_result
-                    }
-
-            else:
-                flash('File '+str(document)+' has a wrong extension', 'danger')
-                return redirect(request.url)
-
-
+            data = {
+                'document': document,
+                'upload_folder': app.config['UPLOAD_FOLDER'],
+                'bah' : test
+            }
 
 
     return render_template("baitsets.html", **data)
 
 
 
-def allowed_file(filename):
+def allowed_file(file, filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
 
-def savefile(filename):
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+def savefile(baits_file, filename):
+    baits_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 #    """Saves a file in a temporary folder"""
 
 

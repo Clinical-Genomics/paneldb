@@ -19,6 +19,29 @@
       <textarea class="form-control" id="exampleFormControlTextarea1" rows="2" ></textarea>
     </div>
 
+
+    <!-- Genomic build dropdown -->
+    <div class="dropdown">
+        <a class="btn btn-info dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Genomic Build
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <a class="dropdown-item" href="#">GRCh37</a>
+            <a class="dropdown-item" href="#">GRCh38</a>
+        </div>
+    </div>
+
+    <!-- testing
+    <select name="cars">
+        <option value="volvo">Volvo</option>
+         <option value="saab">Saab</option>
+        <option value="mercedes">Mercedes</option>
+        <option value="audi">Audi</option>
+    </select> -->
+
+
+
     <div class="input-group mb-3">
       <div class="custom-file">
         <input type="file" accept=".bed, .txt, .csv" class="custom-file-input" name="inputFile" id="inputfile" onchange="setfilename(this.value);" required>
@@ -73,6 +96,8 @@ Submitted document: {{document}} {{upload_folder}} <br>
     //replace the "Choose a file" label
     document.getElementById('baiset_file_label').innerHTML = fileName
   }
+
+
 
 </script>
 {% endblock %}

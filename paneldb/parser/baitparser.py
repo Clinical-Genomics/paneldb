@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 
-
-
 def read_file(pathtofile):
+    """Reads the bed-file and returns a dictionary containing the three first columns of file
 
+    Keyword arguments:
+    pathtofile -- path to bed-file
+    """
     bait_dict_list = []
     with open(pathtofile, 'r') as file:
-        #Open the bed-file and strip of whitespace and return the lines as lists
+
         for line in file:
             bait = {}
             line = line.strip().split('\t')

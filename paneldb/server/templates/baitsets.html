@@ -14,25 +14,32 @@
         <label class="control-label">Add a new bait-set or a new version of an existing one</label>
         <div class="form-group">
             <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-            <label class="form-check-label" for="exampleRadios1">
+            <input class="form-check-input" type="radio" name="file_name_radio" onChange="changedRadio('new')">
+            <label class="form-check-label">
             New bait-set
             </label>
         </div>
         <div class="form-check">
-            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-            <label class="form-check-label" for="exampleRadios1">
+            <input class="form-check-input" type="radio" name="file_name_radio" onChange="changedRadio('new_version')">
+            <label class="form-check-label" >
                 New version of existing bait-set
             </label>
         </div>
     </div>
-
-    <div class="input-group mb-3">
-      <div class="input-group-prepend">
-        <span class="input-group-text" id="inputGroup-sizing-default">Bait set name</span>
+    <br>
+    <div id="name_from_file" >
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-default">Bait set name</span>
+        </div>
+      <input type="text" class="form-control" aria-label="baitset_name" aria-describedby="inputGroup-sizing-default" required>
       </div>
-    <input type="text" class="form-control" aria-label="baitset_name" aria-describedby="inputGroup-sizing-default" required>
     </div>
+    <div id="name_from_db" style="display:none">
+      Name from DB!
+    </div>
+    <br>
+
     <div class="form-check form-check-inline">
         <span class="input-group-text" id="inputGroup-sizing-default">Chromosome build</span>
           <select class="form-control" id="chr_build">
@@ -104,6 +111,18 @@ Submitted document:    {{document}} {{upload_folder}} <br>
     document.getElementById('baiset_file_label').innerHTML = fileName
   }
 
+  function changedRadio(file_from)
+  {
+    if(file_from == 'new')
+    {
+      document.getElementById("name_from_file").style.display = ''
+      document.getElementById("name_from_db").style.display = 'none'
+    }
+    else{
+      document.getElementById("name_from_file").style.display = 'none'
+      document.getElementById("name_from_db").style.display = ''
+    }
+  }
 
 
 </script>

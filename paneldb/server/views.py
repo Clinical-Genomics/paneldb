@@ -35,13 +35,10 @@ def baitsets():
             return redirect(request.url)
 
         else:
-
             savefile(baits_file ,document)
 
             #get content from file:
             lines = read_file(os.path.join(app.config['UPLOAD_FOLDER'], document))
-
-
 
             data = {
                 'document': document,
@@ -55,6 +52,3 @@ def baitsets():
 def savefile(baits_file, filename):
     """Saves a file in a temporary folder"""
     baits_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-
-
-

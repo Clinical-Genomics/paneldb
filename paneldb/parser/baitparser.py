@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 
-def read_file(pathtofile):
-    """Reads the bed-file and returns a dictionary containing the three first columns of file
+def read_file(path_to_file):
+    """Reads the bed-file and returns a list of dictionaries
 
-    Keyword arguments:
-    pathtofile -- path to bed-file
+    Args:
+        path_to_file(): path tp temp file
+
+    Returns:
+        bait_dict_list(list): a list of dictionaries with the keys: chromosome, chr_start, chr_stop
     """
     bait_dict_list = []
     with open(pathtofile, 'r') as file:
@@ -20,4 +23,3 @@ def read_file(pathtofile):
             bait_dict_list.append(bait)
 
     return bait_dict_list
-

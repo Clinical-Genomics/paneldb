@@ -35,40 +35,26 @@ def baitsets():
             return redirect(request.url)
 
         else:
-            # Parse the file to check that it's OK
-            # Extract fields to be passes to the DB
-            # Pass stuff to DB and get all updated baitsets in it.
 
-            document = secure_filename(baits_file.filename)
-
-
-                    # savefile(baits_file) How to use this function correctly?
-                    # Make the data dictionary work
-                   # baits_file.save(os.path.join(app.config['UPLOAD_FOLDER'], document))
             savefile(baits_file ,document)
 
             #get content from file:
-            test = read_file(os.path.join(app.config['UPLOAD_FOLDER'], document))
+            lines = read_file(os.path.join(app.config['UPLOAD_FOLDER'], document))
 
 
 
             data = {
                 'document': document,
                 'upload_folder': app.config['UPLOAD_FOLDER'],
-                'bah' : test
+                'baitlist' : lines
             }
-
 
     return render_template("baitsets.html", **data)
 
 
-
-def allowed_file(file, filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
-
 def savefile(baits_file, filename):
+    """Saves a file in a temporary folder"""
     baits_file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#    """Saves a file in a temporary folder"""
+
 
 

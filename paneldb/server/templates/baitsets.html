@@ -26,8 +26,7 @@
             </label>
         </div>
     </div>
-    <!--If the radiobutton new version has been selected, there shall be possible to select between the already existing
-    bait-sets in the databse, and a new version of that one shall be created-->
+
     <div class="input-group mb-3">
       <div class="input-group-prepend">
         <span class="input-group-text" id="inputGroup-sizing-default">Bait set name</span>
@@ -57,23 +56,25 @@
   </div>
 </form>
 <br>
+
+{% if baitlist %}
 <h4>Available baitsets:</h4>
+{% endif %}
 
-<br><br>
-Submitted document: {{document}} {{upload_folder}} <br>
-
+{% if baitlist %}
+Submitted document:    {{document}} {{upload_folder}} <br>
 <div>
         <table class="table table-striped">
           <thead>
             <tr>
-              <th scope=""col">Chromosome</th>
-              <th scope=""col">chr_start</th>
-              <th scope=""col">chr_stop</th>
-              <th scope=""col">length</th>
+              <th scope="col">Chromosome</th>
+              <th scope="col">chr_start</th>
+              <th scope="col">chr_stop</th>
+              <th scope="col">length</th>
             </tr>
           </thead>
           <tbody>
-            {% for line in bah %}
+            {% for line in baitlist %}
               <tr>
                 <td>{{line.chromosome}}</td>
                 <td>{{line.chr_start}}</td>
@@ -85,9 +86,10 @@ Submitted document: {{document}} {{upload_folder}} <br>
           </tbody>
 
         </table>
-  {{bah}}
+  {{baitlist}}
 
 </div>
+{% endif %}
 
 {% endblock %}
 

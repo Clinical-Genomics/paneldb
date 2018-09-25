@@ -2,4 +2,4 @@
 Flask
 
 #Database
-Flask-PyMongo
+pymongo

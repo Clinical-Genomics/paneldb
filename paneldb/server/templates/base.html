@@ -10,6 +10,15 @@
 
 	{% block css_style %}{% endblock %}
 </head>
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
 <body>
 	{% block body %}
 		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -46,7 +55,17 @@
 				</form>-->
 			</div>
 		</nav>
+
 		{% block content %}
+			{% with messages = get_flashed_messages() %}
+					{% if messages %}
+						<ul class=flashes>
+						{% for message in messages %}
+							<li>{{ message }}</li>
+						{% endfor %}
+						</ul>
+					{% endif %}
+			{% endwith %}
 		{% endblock %}
 	{% endblock %}
 

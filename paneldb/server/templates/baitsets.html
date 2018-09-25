@@ -32,7 +32,7 @@
         <div class="input-group-prepend">
           <span class="input-group-text" id="inputGroup-sizing-default">Bait set name</span>
         </div>
-      <input type="text" class="form-control" aria-label="baitset_name" aria-describedby="inputGroup-sizing-default" required>
+      <input type="text" class="form-control" aria-label="baitset_name" aria-describedby="inputGroup-sizing-default" name="baitset_name" required>
       </div>
     </div>
     <div id="name_from_db" style="display:none">
@@ -42,7 +42,7 @@
 
     <div class="form-check form-check-inline">
         <span class="input-group-text" id="inputGroup-sizing-default">Chromosome build</span>
-          <select class="form-control" id="chr_build">
+          <select class="form-control" id="chr_build" name="chr_build">
             <option>GRCh37</option>
             <option>GRCh38</option>
           </select>
@@ -64,36 +64,32 @@
 </form>
 <br>
 
-{% if baitlist %}
-<h4>Available baitsets:</h4>
-{% endif %}
-
-{% if baitlist %}
-Submitted document:    {{document}} {{upload_folder}} <br>
+{% if baitsets %}
 <div>
         <table class="table table-striped">
           <thead>
             <tr>
-              <th scope="col">Chromosome</th>
-              <th scope="col">chr_start</th>
-              <th scope="col">chr_stop</th>
-              <th scope="col">length</th>
+              <th scope="col">Baitset id</th>
+              <th scope="col">name</th>
+              <th scope="col">version</th>
+              <th scope="col">chr. build</th>
+              <th scope="col">created</th>
             </tr>
           </thead>
           <tbody>
-            {% for line in baitlist %}
+            {% for baitset in baitsets %}
               <tr>
-                <td>{{line.chromosome}}</td>
-                <td>{{line.chr_start}}</td>
-                <td>{{line.chr_stop}}</td>
-                <td>{{line.chr_stop|int - line.chr_start|int}}</td>
+                <td>{{baitset._id}}</td>
+                <td>{{baitset.name}}</td>
+                <td>{{baitset.version}}</td>
+                <td>{{baitset.chr_build}}</td>
+                <td>{{baitset.created_at.strftime('%Y-%m-%d')}}</td>
               </tr>
             {% endfor %}
 
           </tbody>
 
         </table>
-  {{baitlist}}
 
 </div>
 {% endif %}

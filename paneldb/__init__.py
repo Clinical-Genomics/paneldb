@@ -13,8 +13,9 @@ LOG = logging.getLogger(__name__)
 app = Flask(__name__, template_folder='server/templates', instance_relative_config=True)
 app.config.from_pyfile('paneldb_config.cfg')
 
-client = get_client(mongodb='reddit', timeout=20)
+
+client = get_client(mongodb=app.config['MONGODB_DATABASE_NAME'], timeout=20)
 check_connection(client)
-app.adapter = PanelAdapter(client=client, db_name='reddit')
+app.adapter = PanelAdapter(client=client, db_name=app.config['MONGODB_DATABASE_NAME'])
 
 import paneldb.server.views

@@ -25,7 +25,7 @@ class PanelAdapter(MongoAdapter):
         Args:
             name(str): Name of the baitset (more than one baitset in db could have the same name)
             version(float): version of the baitset.
-            baits_dict:
+            baits:
 
         Returns:
             result(str): Inserted document id

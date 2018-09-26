@@ -12,7 +12,7 @@ LOG = logging.getLogger(__name__)
 
 @app.route('/')
 def index():
-    return render_template("index.html",title="paneldb")
+    return redirect(baitsets.url)
 
 @app.route('/panels')
 def gene_panels():
@@ -21,9 +21,7 @@ def gene_panels():
 @app.route('/baitsets', methods=['GET', 'POST'])
 def baitsets():
     """Handles the baitsets page"""
-
     document = None
-    data = {}
     if request.method == 'POST': #add new baitset
         # check if the post request has the file part
         if 'inputFile' not in request.files:
@@ -47,6 +45,7 @@ def baitsets():
 
             #remove the temp baitset file once everything is saved
             os.remove(path_to_temp_file)
+
 
     data = controllers.get_baitsets(adapter)
     return render_template("baitsets.html", **data)

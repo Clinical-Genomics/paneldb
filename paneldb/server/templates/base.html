@@ -28,10 +28,10 @@
 			<div class="collapse navbar-collapse" id="navbarTogglerDemo03">
 				<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
 					<li class="nav-item active">
-						<a class="nav-link" href="">Home <span class="sr-only">(current)</span></a>
+						<a class="nav-link" href="">Bait sets <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{url_for('gene_panels')}}">Gene panels</a>
+						<a class="nav-link disabled" href="">Gene panels</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link disabled" href="">Genes</a>
@@ -43,9 +43,6 @@
 						<a class="nav-link disabled" href="">Hostspots of variation</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="{{url_for('baitsets')}}">Bait sets</a>
-					</li>
-					<li class="nav-item">
 						<a class="nav-link disabled" href="">Panel performance</a>
 					</li>
 				</ul>
@@ -55,18 +52,19 @@
 				</form>-->
 			</div>
 		</nav>
+		{% with messages = get_flashed_messages() %}
+				{% if messages %}
+					<ul class=flashes>
+					{% for message in messages %}
+						<li>{{ message }}</li>
+					{% endfor %}
+					</ul>
+				{% endif %}
+		{% endwith %}
 
 		{% block content %}
-			{% with messages = get_flashed_messages() %}
-					{% if messages %}
-						<ul class=flashes>
-						{% for message in messages %}
-							<li>{{ message }}</li>
-						{% endfor %}
-						</ul>
-					{% endif %}
-			{% endwith %}
 		{% endblock %}
+
 	{% endblock %}
 
 	{% block scripts %}

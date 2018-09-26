@@ -26,7 +26,15 @@ def save_baitset(adapter, name, version, temp_path, build='GRCh37'):
 
 
 def get_baitsets(adapter):
-    """Gets all available baitsets from database"""
+    """Gets all available baitsets from database
+
+    Args:
+        adapter: an instance of PanelAdapter
+
+    Returns:
+        data(dict): a dictionary with baitsets as values
+
+    """
 
     LOG.info('Getting available baitsets')
     baitsets = list(adapter.baitsets()) # convert pymongo.Cursor to object list

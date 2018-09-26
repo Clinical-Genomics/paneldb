@@ -15,7 +15,6 @@ app.config.from_pyfile('paneldb_config.cfg')
 
 
 client = get_client(mongodb=app.config['MONGODB_DATABASE_NAME'], timeout=20)
-check_connection(client)
 app.adapter = PanelAdapter(client=client, db_name=app.config['MONGODB_DATABASE_NAME'])
 
 import paneldb.server.views

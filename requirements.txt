@@ -3,3 +3,6 @@ Flask
 
 #Database
 pymongo
+
+#cli
+click<7.0

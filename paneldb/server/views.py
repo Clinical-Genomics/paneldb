@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 import os
-from flask import render_template, flash, request, redirect
+from flask import render_template, flash, request, redirect, url_for
 from paneldb import app
 from paneldb.parser.baitparser import read_file
 from . import controllers
@@ -12,7 +12,7 @@ LOG = logging.getLogger(__name__)
 
 @app.route('/')
 def index():
-    return redirect(baitsets.url)
+    return redirect(url_for('baitsets'))
 
 @app.route('/panels')
 def gene_panels():

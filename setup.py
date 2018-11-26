@@ -122,6 +122,13 @@ setup(
         'Operating System :: MacOS',
         'Operating System :: Unix'
     ],
+
+    entry_points={
+        'console_scripts': [
+            'paneldb = paneldb.cli.commands:base'
+        ],
+    },
+
     # $ setup.py publish support.
     cmdclass={
         'upload': UploadCommand,

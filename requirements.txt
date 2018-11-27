@@ -6,3 +6,4 @@ pymongo<3.7
 
 #cli
 click<7.0
+enlighten

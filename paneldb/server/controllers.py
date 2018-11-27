@@ -2,7 +2,7 @@
 import logging
 import pymongo
 LOG = logging.getLogger(__name__)
-from paneldb.parser.baitparser import read_file
+from paneldb.parser.baitparser import baits
 
 def save_baitset(adapter, name, version, temp_path, build='GRCh37'):
     """Calls adapter functions to insert a baitset and its baits into database
@@ -18,7 +18,7 @@ def save_baitset(adapter, name, version, temp_path, build='GRCh37'):
     """
     LOG.info("saving baitset {}.{} to database".format(name, version))
     #read from baitset file and collect baits
-    baits_list = read_file(temp_path)
+    baits_list = baits(path_to_file=temp_path)
     if baits_list:
         return adapter.add_baitset(name=name, version=version, baits=baits_list, build=build)
     else:

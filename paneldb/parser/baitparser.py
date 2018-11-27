@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-def read_file(path_to_file, build='GRCh37'):
+def baits(path_to_file, created_baitset_id=None, build='GRCh37'):
     """Reads the bed-file and returns a list of dictionaries
 
     Args:
@@ -14,10 +14,12 @@ def read_file(path_to_file, build='GRCh37'):
         for line in file:
             bait = {}
             line = line.strip().split('\t')
-
             bait['chromosome'] = line[0]
             bait['chr_start'] = line[1]
             bait['chr_stop'] = line[2]
+            if created_baitset_id:
+                bait['baitset'] = [created_baitset_id]
+
             #create a unique id for the bait:
             # id looks like this: chr_start_stop_build
             bait['_id'] = bait['chromosome']+"_"+bait['chr_start']+"_"+bait['chr_stop']+"_"+build

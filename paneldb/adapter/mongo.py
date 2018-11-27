@@ -19,13 +19,13 @@ class PanelAdapter(MongoAdapter):
         self.baitset = self.db.baitset
 
 
-    def add_baitset(self, name, version, baits, build):
+    def add_baitset(self, name, version, build):
         """Insert a baitset object
 
         Args:
             name(str): Name of the baitset (more than one baitset in db could have the same name)
             version(float): version of the baitset.
-            baits:
+            build(str): genome build
 
         Returns:
             result(str): Inserted document id
@@ -39,15 +39,12 @@ class PanelAdapter(MongoAdapter):
             'created_at' : datetime.now()
         }
         result = self.baitset.insert_one(new_baitset)
-        new_baiset_id = result.inserted_id
+        new_baitset_id = result.inserted_id
 
-        # add baits for this baitset by invoking add_baits(baits)
-        # Do stuff in here
-
-        return new_baiset_id
+        return new_baitset_id
 
 
-    def add_baits(self, bait_list):
+    def add_bait(self, bait_obj):
         """Insert a bait object
 
         Args:
@@ -57,7 +54,8 @@ class PanelAdapter(MongoAdapter):
             result(str): inserted document id
 
         """
-        return "this is the result from add_baits"
+        result = self.bait.insert_one(bait_obj)
+        return result.inserted_id
 
 
     def baitsets(self):

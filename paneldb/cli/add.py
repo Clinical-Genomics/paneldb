@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 import logging
 import click
+import pymongo
+import enlighten
 from pymongo import MongoClient
-from paneldb.parser.baitparser import read_file
+from paneldb.parser.baitparser import baits
 from paneldb.adapter.mongo import PanelAdapter
 
 
@@ -16,27 +18,42 @@ LOG = logging.getLogger(__name__)
 @click.option('-v', '--version', type=click.FLOAT, nargs=1, required=False, help="Version of new panel", default=1.0)
 @click.option('-g', '--genomic_build', type=click.Choice(['GRCh37', 'GRCh38']), nargs=1, required=False, default='GRCh37', help="Genome build")
 
-
-def add(file, db_uri, email, panel_name, version, genomic_build):
+def add_baitset( file, db_uri, email, panel_name, version, genomic_build):
 
     LOG.info("saving baitset {}.{} to database".format(panel_name, version))
-    try:
-        # read baitset file
-        baits_list = read_file(file)
-        #LOG.info(str(baits_list))
 
-        client = MongoClient(db_uri)
-        db_name = db_uri.split('/')[-1]
-        db = client[db_name]
+    client = MongoClient(db_uri)
+    db_name = db_uri.split('/')[-1]
+    db = client[db_name]
+    adapter = PanelAdapter(client=client, db_name=db_name)
 
-        adapter = PanelAdapter(client=client, db_name=db_name)
+    created_baitset_id = adapter.add_baitset(name=panel_name, version=version, build=genomic_build)
 
-        LOG.info(adapter)
+    inserted_baits = 0
 
-        created_baitset_id = adapter.add_baitset(name=panel_name, version=version, baits=baits_list, build=genomic_build)
-        LOG.info("Created baitset with ID {}".format(created_baitset_id))
+    # if baitset creation was successful, insert baits
+    if created_baitset_id:
 
+        # obtain all baits from this baitset, formatted as objects
+        baits_list = baits(path_to_file=file, created_baitset_id=created_baitset_id)
 
+        # insert one bait at the time into db
+        pbar = enlighten.Counter(total=len(baits_list), desc='', unit='ticks')
+        for bait in baits_list:
+            try:
+                # add the bait
+                inserted_bait_id = adapter.add_bait(bait)
+                inserted_baits += 1
 
-    except Exception as err:
-        LOG.error("An error occurred while saving from baitset file: {}".format(err))
+            except pymongo.errors.DuplicateKeyError:
+                # if bait exists do nothing
+                LOG.info('pymongo DuplicateKeyError')
+
+            finally:
+                # update baitset with list of baits contained in it
+                updated_baitset = db.baitset.find_one_and_update( {'_id': created_baitset_id}, {'$push': {'baits':bait['_id']}}, upsert= True )
+            pbar.update()
+
+        LOG.info('created baitset with ID {0}. Inserted {1} out of {2} new available baits into db'.format(created_baitset_id, inserted_baits, len(baits_list)))
+    else:
+        LOG.error("Something went wrong and the baitset coudn't be saved to db.")

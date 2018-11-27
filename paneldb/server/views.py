@@ -3,7 +3,7 @@ import logging
 import os
 from flask import render_template, flash, request, redirect, url_for
 from paneldb import app
-from paneldb.parser.baitparser import read_file
+from paneldb.parser.baitparser import baits
 from . import controllers
 
 adapter = app.adapter

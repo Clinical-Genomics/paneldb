@@ -51,6 +51,16 @@ def baitsets():
     return render_template("baitsets.html", **data)
 
 
+@app.route('/baitset/<baitset_id>', methods=['GET'])
+def baitset(baitset_id):
+    """Shows all baits in a baitset"""
+
+    data = {'baitlist' : list(adapter.baitset_baits(baitset_id = baitset_id))}
+    data['sayHello'] = 'Hello'
+    return str(data['baitlist'])
+
+
+
 
 def save_file(baits_file, full_file_path):
     """Saves a file to temp directory"""

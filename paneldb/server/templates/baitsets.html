@@ -79,7 +79,7 @@
           <tbody>
             {% for baitset in baitsets %}
               <tr>
-                <td>{{baitset._id}}</td>
+                <td><a href="{{ url_for('baitset', baitset_id=baitset._id) }}">{{baitset._id}}</a></td>
                 <td>{{baitset.name}}</td>
                 <td>{{baitset.version}}</td>
                 <td>{{baitset.chr_build}}</td>

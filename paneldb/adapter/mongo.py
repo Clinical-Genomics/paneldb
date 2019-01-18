@@ -1,4 +1,5 @@
 import logging
+from bson.objectid import ObjectId
 from datetime import datetime
 from mongo_adapter import MongoAdapter
 
@@ -72,11 +73,11 @@ class PanelAdapter(MongoAdapter):
         """Return baits
 
         Args:
-            query(dict)
+            baitset_id(str)
 
         Returns:
             res(pymongo.Cursor)
         """
-        query = query or {}
-        res = self.bait.find({'baitset_id': baitset_id})
+        query = {'baitset' : {'$in' : [ ObjectId(baitset_id) ] } }
+        res = self.bait.find(query)
         return res

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
 # -*- coding: utf-8 -*-
-from paneldb import app
+from paneldb import run_app
 
-app.run()
+app = run_app()

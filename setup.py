@@ -125,7 +125,7 @@ setup(
 
     entry_points={
         'console_scripts': [
-            'paneldb = paneldb.cli.commands:base'
+            'paneldb = paneldb.cli.commands:cli'
         ],
     },
 

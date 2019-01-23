@@ -1,13 +1,22 @@
 # -*- coding: utf-8 -*-
 import logging
 import click
+from flask.cli import FlaskGroup, with_appcontext, current_app
+from paneldb import create_app
+from .add import add
 
-from .add import add_baitset
-
+cli = FlaskGroup(create_app=create_app)
 LOG = logging.getLogger(__name__)
 
-@click.group()
-def base():
-    LOG.info('inovoked the CLI')
+@cli.command()
+@with_appcontext
+def testconnect():
+    """Retrieves the names of all collections in db"""
+    collections = current_app.db.collection_names()
+    click.echo('Testing connection. Collections in database: {}'.format(collections))
 
-base.add_command(add_baitset)
+
+
+
+cli.add_command(testconnect)
+cli.add_command(add)
